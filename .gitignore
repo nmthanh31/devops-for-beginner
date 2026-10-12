@@ -7,3 +7,11 @@ terraform/k8s-config/*
 !terraform/k8s-config/.gitkeep
 !terraform/k8s-config/*.example.yaml
 !terraform/k8s-config/*.example.yml
+
+# Terraform generated files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log

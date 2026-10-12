@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"platform","Source":"../../shared","Dir":"../../shared"},{"Key":"platform.application","Source":"./modules/application","Dir":"../../shared/modules/application"},{"Key":"platform.namespace","Source":"./modules/namespace","Dir":"../../shared/modules/namespace"}]}
