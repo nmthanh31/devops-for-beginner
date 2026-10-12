@@ -1,0 +1,210 @@
+<mxfile host="app.diagrams.net" modified="2026-10-09T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="atlantis-overview" name="Kiến trúc tổng thể">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="KIẾN TRÚC TỔNG THỂ ATLANTIS" style="text;html=1;align=center;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#17324D;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="1540" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Tự động hóa Terraform thông qua Pull Request / Merge Request" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#5B7083;" vertex="1" parent="1">
+          <mxGeometry x="30" y="62" width="1540" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="team-zone" value="1. NHÓM PHÁT TRIỂN" style="swimlane;html=1;rounded=1;startSize=40;horizontal=1;fillColor=#F3E8FF;swimlaneFillColor=#FCF8FF;strokeColor=#8B5CF6;fontColor=#5B21B6;fontStyle=1;fontSize=15;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="30" y="120" width="220" height="735" as="geometry"/>
+        </mxCell>
+        <mxCell id="git-zone" value="2. GIT HOST" style="swimlane;html=1;rounded=1;startSize=40;horizontal=1;fillColor=#DBEAFE;swimlaneFillColor=#F6FAFF;strokeColor=#3B82F6;fontColor=#1D4ED8;fontStyle=1;fontSize=15;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="280" y="120" width="300" height="735" as="geometry"/>
+        </mxCell>
+        <mxCell id="atlantis-zone" value="3. ATLANTIS PLATFORM" style="swimlane;html=1;rounded=1;startSize=40;horizontal=1;fillColor=#CCFBF1;swimlaneFillColor=#F3FFFC;strokeColor=#0D9488;fontColor=#0F766E;fontStyle=1;fontSize=15;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="610" y="120" width="520" height="735" as="geometry"/>
+        </mxCell>
+        <mxCell id="tf-zone" value="4. TERRAFORM &amp; HẠ TẦNG ĐÍCH" style="swimlane;html=1;rounded=1;startSize=40;horizontal=1;fillColor=#FEF3C7;swimlaneFillColor=#FFFCF3;strokeColor=#F59E0B;fontColor=#B45309;fontStyle=1;fontSize=15;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="120" width="410" height="735" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="developer" value="&lt;b&gt;Developer / DevOps&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Sửa mã Terraform&lt;br&gt;Push commit, tạo PR&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8B5CF6;strokeWidth=2;fontColor=#3B2766;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="190" width="170" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="reviewer" value="&lt;b&gt;Reviewer / Approver&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Review code và plan&lt;br&gt;Approve, comment apply&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8B5CF6;strokeWidth=2;fontColor=#3B2766;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="360" width="170" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="platform-admin" value="&lt;b&gt;Platform Administrator&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Cấu hình, phân quyền&lt;br&gt;Giám sát Atlantis&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8B5CF6;strokeWidth=2;fontColor=#3B2766;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="590" width="170" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="repository" value="&lt;b&gt;Git Repository&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;*.tf, modules, tfvars&lt;br&gt;atlantis.yaml&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#3B82F6;strokeWidth=2;fontColor=#1E3A5F;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="185" width="220" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="pull-request" value="&lt;b&gt;Pull / Merge Request&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Code diff • Review • Approval&lt;br&gt;Comment: atlantis plan/apply&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontColor=#1E3A5F;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="350" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="vcs-api" value="&lt;b&gt;Webhook + VCS API&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;PR events và comments&lt;br&gt;Trả status/plan về PR&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=2;fontColor=#1E3A5F;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="535" width="220" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="git-note" value="GitHub • GitLab • Bitbucket&lt;br&gt;Gitea • Azure DevOps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F1FF;strokeColor=#93C5FD;fontColor=#1E40AF;fontSize=12;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="700" width="190" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="server-boundary" value="ATLANTIS SERVER" style="swimlane;html=1;rounded=1;startSize=34;horizontal=1;fillColor=#99F6E4;swimlaneFillColor=#FFFFFF;strokeColor=#0F766E;fontColor=#115E59;fontStyle=1;fontSize=14;arcSize=7;" vertex="1" parent="1">
+          <mxGeometry x="635" y="175" width="470" height="430" as="geometry"/>
+        </mxCell>
+        <mxCell id="event-controller" value="&lt;b&gt;Event Controller&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Nhận và xác thực webhook&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#14B8A6;fontColor=#134E4A;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="660" y="235" width="185" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="vcs-client" value="&lt;b&gt;VCS Client&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Clone code, comment, status&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#14B8A6;fontColor=#134E4A;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="890" y="235" width="185" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="project-detector" value="&lt;b&gt;Project Detector&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Phát hiện project thay đổi&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#14B8A6;fontColor=#134E4A;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="660" y="340" width="185" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="workflow-engine" value="&lt;b&gt;Workflow Engine&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;init → plan / apply&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#14B8A6;fontColor=#134E4A;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="890" y="340" width="185" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="lock-manager" value="&lt;b&gt;Lock Manager&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Khóa project + workspace&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#14B8A6;fontColor=#134E4A;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="660" y="455" width="185" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="terraform-runner" value="&lt;b&gt;Terraform Runner&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Thực thi CLI trong working dir&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=2;fontColor=#064E3B;fontSize=13;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="890" y="455" width="185" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="requirements" value="&lt;b&gt;Policy / Requirements&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;approved • mergeable • undiverged&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0FDFA;strokeColor=#5EEAD4;fontColor=#115E59;fontSize=12;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="545" width="280" height="42" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="persistent-volume" value="&lt;b&gt;Persistent Volume&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Plan files và working data&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#FFFFFF;strokeColor=#0D9488;strokeWidth=2;fontColor=#134E4A;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="645" y="660" width="185" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="config-secrets" value="&lt;b&gt;Config &amp; Secrets&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;repos.yaml • allowlist&lt;br&gt;VCS token • provider credentials&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0D9488;strokeWidth=2;fontColor=#134E4A;fontSize=13;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="660" width="235" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="observability" value="&lt;b&gt;Logs / Metrics / Monitoring&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFFA;strokeColor=#5EEAD4;fontColor=#115E59;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="730" y="785" width="280" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="terraform-cli" value="&lt;b&gt;Terraform CLI&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;terraform init&lt;br&gt;terraform plan&lt;br&gt;terraform apply&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7C3AED;strokeWidth=2;fontColor=#4C1D95;fontSize=15;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="185" width="180" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="remote-state" value="&lt;b&gt;Remote State Backend&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Terraform state&lt;br&gt;State locking&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#FFFFFF;strokeColor=#F59E0B;strokeWidth=2;fontColor=#78350F;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1405" y="185" width="135" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="cloud-boundary" value="HẠ TẦNG ĐƯỢC QUẢN LÝ" style="swimlane;html=1;rounded=1;startSize=34;horizontal=1;fillColor=#FDE68A;swimlaneFillColor=#FFFFFF;strokeColor=#D97706;fontColor=#92400E;fontStyle=1;fontSize=13;arcSize=7;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="390" width="350" height="265" as="geometry"/>
+        </mxCell>
+        <mxCell id="aws" value="&lt;b&gt;AWS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;EC2 • VPC • RDS&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#F97316;fontColor=#9A3412;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="450" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="azure" value="&lt;b&gt;Azure&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;VM • VNet • SQL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;fontColor=#1E40AF;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1375" y="450" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="gcp" value="&lt;b&gt;Google Cloud&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;GCE • VPC • GKE&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0FDF4;strokeColor=#22C55E;fontColor=#166534;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="550" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="kubernetes" value="&lt;b&gt;Kubernetes / Khác&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Cluster • SaaS • On-prem&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#6366F1;fontColor=#3730A3;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1375" y="550" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="backend-note" value="Ví dụ backend: S3, Azure Storage, GCS, HCP Terraform" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#FCD34D;fontColor=#92400E;fontSize=12;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="705" width="330" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="flow-summary" value="&lt;b&gt;LUỒNG ĐIỂN HÌNH:&lt;/b&gt;  Mở / cập nhật PR  →  Atlantis tự chạy plan  →  Review &amp; approve  →  Comment &lt;b&gt;atlantis apply&lt;/b&gt;  →  Apply thành công  →  Merge PR  →  Mở khóa" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=2;fontColor=#334155;fontSize=14;align=center;verticalAlign=middle;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="890" width="1260" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-dev-repo" value="Push commit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#5B21B6;" edge="1" parent="1" source="developer" target="repository">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-dev-pr" value="Tạo / cập nhật PR" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#5B21B6;" edge="1" parent="1" source="developer" target="pull-request">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-review-pr" value="Review • Approve&lt;br&gt;atlantis apply" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#5B21B6;" edge="1" parent="1" source="reviewer" target="pull-request">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-repo-pr" value="Code diff" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3B82F6;strokeWidth=1.5;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1" source="repository" target="pull-request">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-pr-api" value="PR events / comments" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#1D4ED8;" edge="1" parent="1" source="pull-request" target="vcs-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-api-event" value="Webhook" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#1D4ED8;" edge="1" parent="1" source="vcs-api" target="event-controller">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-vcs-api-return" value="Plan • status • logs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284C7;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontSize=11;fontColor=#0369A1;" edge="1" parent="1" source="vcs-client" target="vcs-api">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="870" y="320"/>
+              <mxPoint x="590" y="320"/>
+              <mxPoint x="590" y="583"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-repo-vcs" value="Clone nhánh PR" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284C7;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontSize=11;fontColor=#0369A1;" edge="1" parent="1" source="repository" target="vcs-client">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="230"/>
+              <mxPoint x="570" y="215"/>
+              <mxPoint x="982" y="215"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-event-detector" value="Sự kiện hợp lệ" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#0F766E;" edge="1" parent="1" source="event-controller" target="project-detector">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-event-vcs" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="event-controller" target="vcs-client">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-detector-workflow" value="Project bị thay đổi" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#0F766E;" edge="1" parent="1" source="project-detector" target="workflow-engine">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-lock-workflow" value="Cho phép chạy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#0F766E;" edge="1" parent="1" source="lock-manager" target="workflow-engine">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-workflow-runner" value="Plan / Apply" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#059669;strokeWidth=3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#047857;" edge="1" parent="1" source="workflow-engine" target="terraform-runner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-require-workflow" value="Kiểm tra điều kiện" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=1.5;dashed=1;endArrow=block;endFill=1;fontSize=10;fontColor=#0F766E;" edge="1" parent="1" source="requirements" target="workflow-engine">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-runner-pv" value="Lưu / đọc plan" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=2;endArrow=block;endFill=1;startArrow=block;startFill=1;fontSize=11;fontColor=#0F766E;" edge="1" parent="1" source="terraform-runner" target="persistent-volume">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1085" y="620"/>
+              <mxPoint x="738" y="620"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-config-server" value="Cấu hình + credentials" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0D9488;strokeWidth=2;dashed=1;endArrow=block;endFill=1;fontSize=11;fontColor=#0F766E;" edge="1" parent="1" source="config-secrets" target="terraform-runner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-admin-config" value="Quản trị" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#5B21B6;" edge="1" parent="1" source="platform-admin" target="config-secrets">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="265" y="635"/>
+              <mxPoint x="265" y="780"/>
+              <mxPoint x="978" y="780"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-server-obs" value="Logs / metrics" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#64748B;strokeWidth=1.5;dashed=1;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;" edge="1" parent="1" source="server-boundary" target="observability">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-runner-cli" value="Thực thi lệnh" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7C3AED;strokeWidth=3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#5B21B6;" edge="1" parent="1" source="terraform-runner" target="terraform-cli">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1115" y="488"/>
+              <mxPoint x="1145" y="488"/>
+              <mxPoint x="1145" y="243"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-cli-state" value="Đọc / ghi state" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D97706;strokeWidth=2;endArrow=block;endFill=1;startArrow=block;startFill=1;fontSize=11;fontColor=#B45309;" edge="1" parent="1" source="terraform-cli" target="remote-state">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-cli-cloud" value="Provider API&lt;br&gt;Plan / Apply" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#EA580C;strokeWidth=3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#C2410C;" edge="1" parent="1" source="terraform-cli" target="cloud-boundary">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

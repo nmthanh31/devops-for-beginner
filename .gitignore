@@ -1,0 +1,9 @@
+# Kubernetes kubeconfig
+# Kubeconfig thường chứa certificate, token hoặc thông tin truy cập cluster.
+terraform/k8s-config/*
+
+# Chỉ cho phép commit tài liệu và file mẫu không chứa thông tin thật.
+!terraform/k8s-config/README.md
+!terraform/k8s-config/.gitkeep
+!terraform/k8s-config/*.example.yaml
+!terraform/k8s-config/*.example.yml

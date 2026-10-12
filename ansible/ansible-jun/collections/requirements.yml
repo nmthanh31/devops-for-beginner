@@ -1,0 +1,3 @@
+collections:
+- name: kubernetes-core-6.6.0.tar.gz
+  version: 6.6.0
