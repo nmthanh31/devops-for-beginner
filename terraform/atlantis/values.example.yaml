@@ -1,0 +1,25 @@
+# Copy to values.local.yaml and replace every <...> placeholder locally.
+# Do not commit values.local.yaml: it contains the GitLab PAT and webhook secret.
+
+orgAllowlist: "<gitlab-host>/<group>/<project>"
+atlantisUrl: "https://<public-atlantis-host>"
+
+gitlab:
+  user: "atlantis-bot"
+  token: "<gitlab-personal-access-token>"
+  secret: "<webhook-secret>"
+  hostname: "<gitlab-host>"
+
+service:
+  type: ClusterIP
+  port: 80
+
+# Keep disabled for the first smoke test. Use an HTTPS ingress later so GitLab
+# can reach https://<atlantis-host>/events.
+ingress:
+  enabled: false
+webhook_ingress:
+  enabled: false
+
+# Atlantis needs Kubernetes API access for the Terraform Kubernetes provider.
+enableKubernetesBackend: true

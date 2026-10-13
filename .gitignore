@@ -15,3 +15,8 @@ terraform/k8s-config/*
 *.tfplan
 crash.log
 crash.*.log
+
+# Atlantis local Helm values and Helm cache
+.helm/
+terraform/atlantis/values.local.yaml
+terraform/atlantis/*secret*.yaml
