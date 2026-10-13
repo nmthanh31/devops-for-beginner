@@ -48,7 +48,8 @@ F/
     ├── k8s-config/           # Kubeconfig cục bộ, không được commit public
     └── terraform-jun/
         ├── lab1/
-        └── lab2/
+        ├── lab2/
+        └── lab3/              # Atlantis PR workflow trên Kubernetes
 ```
 
 Các thư mục sẽ bổ sung khi roadmap đi đến giai đoạn tương ứng:
@@ -116,6 +117,7 @@ Lưu tài liệu Infrastructure as Code, các lab Terraform và kubeconfig dùng
 - Đọc trước: [Tổng quan Terraform](terraform/docs/terraform-overview.md)
 - Ôn module và cấu trúc dự án: [Modules và cấu trúc dự án](terraform/docs/08-modules-va-cau-truc-du-an.md)
 - Lab hiện tại: [Terraform Lab 2](terraform/terraform-jun/lab2/README.md)
+- Lab tiếp theo: [Terraform Lab 3 — Atlantis](terraform/terraform-jun/lab3/README.md)
 
 Khi làm Terraform luôn đi theo chu trình:
 
