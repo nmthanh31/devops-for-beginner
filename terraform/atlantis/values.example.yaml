@@ -1,25 +1,50 @@
-# Copy to values.local.yaml and replace every <...> placeholder locally.
-# Do not commit values.local.yaml: it contains the GitLab PAT and webhook secret.
+# Atlantis Helm values template for the local Kubernetes lab.
+#
+# Copy this file to values.local.yaml, replace every <...> placeholder,
+# and keep values.local.yaml out of Git. Never put a real PAT or webhook
+# secret in this example file.
 
+# Hostname/path only. Do not include https:// or the .git suffix.
 orgAllowlist: "<gitlab-host>/<group>/<project>"
-atlantisUrl: "https://<public-atlantis-host>"
+
+# Leave empty while Atlantis is only tested through port-forward.
+# Set an HTTPS URL later when GitLab can reach Atlantis.
+atlantisUrl: ""
 
 gitlab:
-  user: "atlantis-bot"
+  user: "<gitlab-atlantis-user>"
   token: "<gitlab-personal-access-token>"
   secret: "<webhook-secret>"
+  # Hostname only. Do not include https:// or a trailing slash.
   hostname: "<gitlab-host>"
 
 service:
   type: ClusterIP
   port: 80
 
-# Keep disabled for the first smoke test. Use an HTTPS ingress later so GitLab
-# can reach https://<atlantis-host>/events.
+# Disabled for the first in-cluster smoke test.
 ingress:
   enabled: false
+
 webhook_ingress:
   enabled: false
 
-# Atlantis needs Kubernetes API access for the Terraform Kubernetes provider.
+# Atlantis uses its Kubernetes ServiceAccount for the Kubernetes backend.
 enableKubernetesBackend: true
+
+serviceAccount:
+  create: true
+  name: atlantis
+
+replicaCount: 1
+
+# Keep exactly one small PVC for repository checkout data.
+volumeClaim:
+  enabled: true
+  dataStorage: 1Gi
+  storageClassName: ""
+  accessModes: ["ReadWriteOnce"]
+
+# No separate PVC for plan files in this lab.
+sharePlanDirVolumeClaim:
+  enabled: false

@@ -1,0 +1,39 @@
+# APISIX route for Atlantis under the existing internal host.
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: atlantis
+  namespace: atlantis
+spec:
+  ingressClassName: apisix
+  http:
+    - name: atlantis
+      match:
+        hosts:
+          - dev-cmp-api.vnpost.vn
+        paths:
+          - /atlantis
+          - /atlantis/*
+      backends:
+        - serviceName: atlantis
+          servicePort: 80
+      plugins:
+        - name: proxy-rewrite
+          enable: true
+          config:
+            regex_uri:
+              - "^/atlantis/?(.*)"
+              - "/$1"
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixTls
+metadata:
+  name: atlantis
+  namespace: ingress-apisix
+spec:
+  ingressClassName: apisix
+  hosts:
+    - dev-cmp-api.vnpost.vn
+  secret:
+    name: dev-cmp-api-tls-apisix
+    namespace: ingress-apisix
