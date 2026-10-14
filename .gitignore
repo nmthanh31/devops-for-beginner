@@ -18,5 +18,6 @@ crash.*.log
 
 # Atlantis local Helm values and Helm cache
 .helm/
-terraform/atlantis/values.local.yaml
+terraform/atlantis/values*.yaml
+!terraform/atlantis/values.example.yaml
 terraform/atlantis/*secret*.yaml
