@@ -21,3 +21,5 @@ crash.*.log
 terraform/atlantis/values*.yaml
 !terraform/atlantis/values.example.yaml
 terraform/atlantis/*secret*.yaml
+
+setup/*
