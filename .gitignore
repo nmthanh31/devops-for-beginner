@@ -23,3 +23,8 @@ terraform/atlantis/values*.yaml
 terraform/atlantis/*secret*.yaml
 
 setup/*
+
+# Python lab local environment and bytecode
+python/lab/.venv/
+**/__pycache__/
+*.py[cod]

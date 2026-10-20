@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: falco-router
+  namespace: python-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: falco-router
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: falco-router
+    spec:
+      serviceAccountName: falco-router
+      imagePullSecrets:
+        - name: harbor-regcred
+      containers:
+        - name: app
+          image: uat-harbor-lab.vnpost.vn/python-router/falco-router:0.1.2
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: K8S_API_URL
+              value: https://kubernetes.default.svc
+            - name: CLUSTER_NAME
+              value: CLUSTER-UAT-CMP
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: falco-router-telegram
+                  key: bot-token
+            - name: TELEGRAM_CHAT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: falco-router-telegram
+                  key: chat-id
+            - name: IGNORED_NAMESPACES
+              value: ""
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
