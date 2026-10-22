@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "A",
+    "author": "tgA",
+    "year": 100,
+    "status": "Chưa đọc"
+  },
+  {
+    "id": "2",
+    "name": "B",
+    "author": "tgA",
+    "year": 2010,
+    "status": "Đang đọc"
+  }
+]
