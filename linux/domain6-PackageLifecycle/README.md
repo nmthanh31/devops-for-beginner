@@ -6,6 +6,8 @@ Domain này học cách quản lý vòng đời phần mềm trên Linux: tìm p
 
 Đọc theo thứ tự trong [docs](./docs/README.md).
 
+Thực hành trong [L06 Labs](./lab/README.md).
+
 Nội dung chính bám theo LPIC-1 Objective **102.4 — Debian package management** và **102.5 — RPM/YUM package management**. Ubuntu/Debian dùng `apt` và `dpkg`; các hệ Fedora/RHEL thường dùng `dnf`/`yum` và `rpm`.
 
 ## Chuỗi cần nhớ

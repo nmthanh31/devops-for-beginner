@@ -1,0 +1,12 @@
+[
+  {
+    "amount": 10000.0,
+    "category": "Ăn uống",
+    "note": "nợ"
+  },
+  {
+    "amount": 1000000.0,
+    "category": "Di chuyển",
+    "note": "Đã trả"
+  }
+]
