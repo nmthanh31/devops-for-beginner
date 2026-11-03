@@ -1,20 +1,87 @@
 # Kubernetes kubeconfig
 # Kubeconfig thường chứa certificate, token hoặc thông tin truy cập cluster.
 terraform/k8s-config/*
+**/k8s-config/*
+**/kubeconfig
+**/kubeconfig.*
+!**/kubeconfig.example.yaml
+!**/kubeconfig.example.yml
+**/.kube/
 
 # Chỉ cho phép commit tài liệu và file mẫu không chứa thông tin thật.
 !terraform/k8s-config/README.md
 !terraform/k8s-config/.gitkeep
 !terraform/k8s-config/*.example.yaml
 !terraform/k8s-config/*.example.yml
+!**/k8s-config/README.md
+!**/k8s-config/.gitkeep
+!**/k8s-config/*.example.yaml
+!**/k8s-config/*.example.yml
+
+# Local environment, credentials, private keys and Kubernetes Secret manifests
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+!**/.env.template
+*.env
+*.env.*
+!*.example.env
+!*.sample.env
+!*.template.env
+!*.env.example
+!*.env.sample
+!*.env.template
+.envrc
+**/.aws/
+**/.ssh/
+**/credentials
+**/credentials.*
+!**/credentials.example
+!**/credentials.example.*
+**/*secret*.yaml
+**/*secret*.yml
+**/*secret*.json
+!**/*secret*.example.yaml
+!**/*secret*.example.yml
+!**/*secret*.example.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
 
 # Terraform generated files
 **/.terraform/*
 *.tfstate
 *.tfstate.*
 *.tfplan
+*.tfvars
+*.tfvars.json
+!*.example.tfvars
+!*.example.tfvars.json
+!*.tfvars.example
+!*.tfvars.example.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 crash.log
 crash.*.log
+
+# Raw lab output may contain tokens, addresses, payloads or customer data
+*.log
+*.pcap
+*.pcapng
+*.har
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.bak
 
 # Atlantis local Helm values and Helm cache
 .helm/
@@ -25,10 +92,12 @@ terraform/atlantis/*secret*.yaml
 setup/*
 
 # Python lab local environment and bytecode
-python/lab/.venv/
+**/.venv/
 **/__pycache__/
 *.py[cod]
 
 .vscode
 .tools
 .pytest_cache
+.ruff_cache/
+.mypy_cache/
