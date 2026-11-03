@@ -1,5 +1,11 @@
 # Bài 5 — Cấu trúc script, cleanup và trap
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Dựng khung script chuẩn: shebang, strict mode, hàm, `trap` cleanup.
+> - Biết giới hạn của `set -e` và viết script idempotent.
+
+
 ## Shebang
 
 Shebang ở dòng đầu cho biết interpreter:
@@ -42,6 +48,43 @@ prepare → work → verify → commit
 ## Idempotency
 
 Script idempotent có thể chạy lại mà không làm hỏng trạng thái đã đúng. Ví dụ kiểm tra thư mục tồn tại trước khi tạo; không tạo duplicate entry mỗi lần chạy.
+
+<!-- learn:tail -->
+## Khung script mẫu
+
+```bash
+#!/usr/bin/env bash
+set -Eeuo pipefail
+IFS=$'\n\t'
+
+tmp="$(mktemp -d)"
+cleanup() { rm -rf -- "$tmp"; }
+trap cleanup EXIT
+
+die() { echo "ERROR: $*" >&2; exit "${2:-1}"; }
+
+main() {
+  local target="${1:-}"
+  [[ -n "$target" ]] || die "thiếu target" 2
+  # ...
+}
+main "$@"
+```
+
+## Tự kiểm tra
+
+1. `set -u` bắt lỗi gì?
+2. Vì sao `trap cleanup EXIT` tốt hơn gọi `cleanup` ở cuối script?
+3. Script "idempotent" nghĩa là gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Dùng biến chưa đặt → thoát thay vì âm thầm thành chuỗi rỗng.
+2. Chạy cả khi script thoát sớm do lỗi hoặc `exit`.
+3. Chạy nhiều lần cho cùng kết quả, không tạo trùng/không hỏng (ví dụ `mkdir -p`, kiểm trước khi thêm dòng).
+
+</details>
 
 ## Nguồn
 

@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: kubernetes-alert-gateway
+  namespace: cattle-monitoring-system
+spec:
+  route:
+    receiver: kubernetes-alert-gateway
+    groupBy:
+      - alertname
+      - namespace
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 4h
+  receivers:
+    - name: kubernetes-alert-gateway
+      webhookConfigs:
+        - url: http://alert-webhook-service.cattle-monitoring-system.svc.cluster.local:8080/api/v1/webhooks/alertmanager
+          sendResolved: true
+          httpConfig:
+            basicAuth:
+              username:
+                name: alert-webhook-secret
+                key: ALERTMANAGER_WEBHOOK_USER
+              password:
+                name: alert-webhook-secret
+                key: ALERTMANAGER_WEBHOOK_PASSWORD

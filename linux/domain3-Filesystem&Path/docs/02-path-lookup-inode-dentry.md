@@ -1,5 +1,14 @@
 # Bài 2 — Path lookup, inode và dentry
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Mô tả kernel đi từng thành phần của path và chỗ path có thể hỏng giữa đường.
+> - Phân biệt **tên** (directory entry), **inode** (object + metadata), **dentry** (cache trong VFS).
+> - Đọc evidence bằng `stat`, `namei -l`, `readlink -f`.
+>
+> **Hình dung:** path giống chỉ đường "vào cổng → tầng 3 → phòng 302 → ngăn kéo 2". Tên phòng ghi trên cửa (directory entry), còn đồ vật thật trong ngăn kéo là inode. Một đồ vật có thể được ghi ở hai danh sách (hard link). Lễ tân nhớ sẵn các đường hay đi (dentry cache).
+
+
 > **Nền tảng + mở rộng:** LPIC-1 104.7 yêu cầu tìm file và biết vị trí theo FHS. Inode là nền tảng cần để hiểu hard link trong 104.6. VFS path walk và dentry là phần mở rộng giải thích cách kernel tăng tốc việc tìm đường dẫn.
 
 ## Path là tên đường đi, không phải bản thân file
@@ -44,6 +53,31 @@ readlink -f /etc/os-release
 - `readlink -f` cho biết path chuẩn hóa cuối cùng nếu các thành phần tồn tại.
 
 GNU `stat path` mặc định hiển thị chính symlink nếu path cuối là symlink; thêm `stat -L path` để theo symlink và hiển thị metadata của đích. Khi cần xem target text, dùng `readlink link`.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Tên file nằm trong inode." | Tên nằm trong directory; inode không biết tên của mình. |
+| "Cùng inode number là cùng file." | Chỉ khi cùng filesystem/device. |
+| "Permission denied ở file cuối." | Có thể do thiếu quyền `x` ở một thư mục cha — `namei -l` chỉ ra. |
+| "`stat link` cho metadata của đích." | GNU `stat` mặc định hiện chính symlink; dùng `stat -L`. |
+
+## Tự kiểm tra
+
+1. Path tương đối `logs/app.log` được tra bắt đầu từ đâu?
+2. `cat /srv/app/conf/a.yml` báo Permission denied dù `a.yml` có mode `644`. Kiểm gì?
+3. Dentry có phải một file trên disk không?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Từ CWD của process đang chạy lệnh.
+2. `namei -l /srv/app/conf/a.yml` — một thư mục cha thiếu quyền search (`x`) cho user.
+3. Không — là object cache trong bộ nhớ của VFS.
+
+</details>
 
 ## Nguồn
 

@@ -1,5 +1,14 @@
 # Bài 4 — Access check và chẩn đoán permission
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Chạy checklist 6 bước khi gặp `Permission denied`.
+> - Thu evidence đúng identity của **process** (không phải shell), đúng **path** (mọi component).
+> - Sửa theo least privilege, kèm positive + negative test.
+>
+> **Cần trước:** [Bài 1–3](./README.md), [L03 path lookup](../../domain3-Filesystem&Path/docs/02-path-lookup-inode-dentry.md).
+
+
 > **Kết nối L01–L03:** dùng identity process và path/inode để giải thích vì sao service đọc/ghi được hoặc bị từ chối.
 
 ## Quyền trên file cuối chưa đủ
@@ -51,6 +60,28 @@ service UID/GID
 ~~~
 
 Mỗi quyền nên có lý do và đường kiểm chứng. Sau khi thay đổi, kiểm tra cả đường được phép lẫn đường phải bị từ chối.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`chmod 777` là cách nhanh để test." | Che nguyên nhân và mở lỗ hổng; luôn sửa đúng path/identity. |
+| "Kiểm `id` của tôi là đủ." | Kiểm UID/GID của **process service** (`ps -o user,group`). |
+| "File mode đúng mà vẫn denied → bug." | Thường là parent dir, ACL (`+`), hoặc group chưa nạp. |
+
+## Tự kiểm tra
+
+Service `lab-api` (User=appuser) báo `Permission denied: /srv/lab/data/out.log`. `ls -l out.log` → `-rw-rw---- appuser appteam`. Liệt kê 3 lệnh kiểm theo thứ tự.
+
+<details>
+<summary>Đáp án</summary>
+
+1. `ps -o pid,user,group,cmd -C <tên process>` — service có thật chạy `appuser` không?
+2. `namei -l /srv/lab/data/out.log` — parent nào thiếu `x` cho appuser?
+3. `getfacl` nếu thấy `+`; và kiểm thao tác: tạo file mới cần `w`+`x` trên `data/`.
+
+</details>
 
 ## Nguồn
 

@@ -1,5 +1,11 @@
 # Bài 4 — Vòng đời package
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Đi trọn vòng: search → inspect → install → verify → remove/purge.
+> - Phân biệt `remove` và `purge`; biết "cài xong" không có nghĩa "service đang chạy".
+
+
 Một package thường đi qua chuỗi:
 
 ```text
@@ -54,6 +60,28 @@ Dữ liệu ứng dụng trong `/var/lib`, `/var/log` hoặc thư mục riêng k
 ## Update và upgrade
 
 Update danh sách package và upgrade package là hai việc khác nhau. Trước khi xác nhận một upgrade, nên đọc danh sách package sẽ được thêm, nâng cấp hoặc gỡ.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`remove` xóa sạch." | Giữ config file; `purge` mới xóa config. |
+| "Cài nginx là nginx đang phục vụ." | Kiểm `systemctl status`, `ss -lntp`, `curl` (L02). |
+| "`autoremove` lúc nào cũng an toàn." | Đọc danh sách — có thể gỡ thứ bạn đang dùng mà chưa đánh dấu manual. |
+
+## Tự kiểm tra
+
+1. `dpkg -l tree` hiện `rc`. Nghĩa gì?
+2. Sau `apt install nginx`, ba lệnh chứng minh service phục vụ được?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `r` = removed, `c` = config files còn lại — đã `remove` nhưng chưa `purge`.
+2. `systemctl is-active nginx`, `ss -lntp | grep :80`, `curl -I http://127.0.0.1/`.
+
+</details>
 
 ## Nguồn
 

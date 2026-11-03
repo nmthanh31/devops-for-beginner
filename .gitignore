@@ -28,3 +28,7 @@ setup/*
 python/lab/.venv/
 **/__pycache__/
 *.py[cod]
+
+.vscode
+.tools
+.pytest_cache

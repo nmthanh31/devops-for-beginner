@@ -1,5 +1,13 @@
 # Bài 3 — DPKG và package database
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Dùng `dpkg -s`, `-L`, `-S` để hỏi: package có cài không, gồm file gì, file này của package nào.
+> - Hiểu dpkg làm việc cục bộ, APT lo repo + dependency.
+>
+> **Hình dung:** dpkg là **sổ kho** của máy — biết chính xác món nào đã nhập, nằm ở kệ nào. APT là **bộ phận mua hàng** — đi siêu thị, chọn đúng phiên bản, mua kèm đồ cần thiết.
+
+
 ## DPKG là gì?
 
 `dpkg` là công cụ cấp thấp của Debian. Nó làm việc trực tiếp với package `.deb` và database package trên máy.
@@ -46,6 +54,29 @@ DPKG không tự giải quyết đầy đủ dependency từ repository. Vì v�
 dpkg = quản lý package cục bộ
 apt   = repository + dependency + workflow cài đặt
 ```
+
+<!-- learn:tail -->
+## Ba câu hỏi, ba lệnh
+
+| Câu hỏi | Lệnh |
+|---|---|
+| Package X đã cài? Version? | `dpkg -s X` |
+| Package X cài những file nào? | `dpkg -L X` |
+| File `/usr/bin/y` thuộc package nào? | `dpkg -S /usr/bin/y` |
+| File của package có bị sửa không? | `dpkg --verify X` (hoặc `debsums`) |
+
+## Tự kiểm tra
+
+1. Thấy file lạ `/etc/foo.conf`, muốn biết package nào mang nó tới?
+2. `dpkg -S` không trả kết quả cho một binary trong `/usr/local/bin`. Nghĩa gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `dpkg -S /etc/foo.conf`.
+2. Không do package quản lý (cài tay/script) — dpkg không theo dõi được, phải tự quản lý version/rollback.
+
+</details>
 
 ## Nguồn
 

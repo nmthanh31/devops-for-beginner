@@ -1,5 +1,13 @@
 # Bài 6 — Environment Variables
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Phân biệt shell variable và environment variable; biết env được **copy** sang child lúc tạo.
+> - Đọc env của một process đang chạy và nhận diện rủi ro lộ secret.
+>
+> **Hình dung:** env là **túi đồ cá nhân** cha mẹ chuẩn bị cho con trước khi ra đi — đưa xong thì đổi túi của cha mẹ không ảnh hưởng con nữa.
+
+
 ### Environment là gì?
 
 Environment là tập biến được truyền vào process.
@@ -56,4 +64,18 @@ Environment có thể chứa password, API key hoặc token. Đây không phải
 5. Secret trong environment vẫn có thể bị quan sát.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Đổi `export X=2` trong shell, service đã chạy trước đó thấy giá trị mới không?
+2. Vì sao không nên truyền password qua env khi có thể tránh?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Không — env được copy lúc tạo process; phải restart.
+2. Lộ qua `/proc/PID/environ`, log crash, child process kế thừa.
+
+</details>
 

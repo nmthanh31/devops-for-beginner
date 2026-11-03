@@ -1,5 +1,13 @@
 # Bài 11 — Signal
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Phân biệt SIGTERM (xin dừng, có thể dọn dẹp) và SIGKILL (dừng ngay, không bắt được).
+> - Biết SIGHUP, SIGINT, SIGSTOP/SIGCONT dùng khi nào.
+>
+> **Hình dung:** SIGTERM là **gõ cửa báo hết giờ** — người trong phòng kịp cất đồ, khóa két. SIGKILL là **cắt điện cả tòa nhà**.
+
+
 ### Signal là gì?
 
 Signal là cơ chế kernel dùng để gửi thông báo hoặc yêu cầu tới process.
@@ -64,4 +72,18 @@ Dùng SIGKILL ngay có thể làm mất dữ liệu, cắt request, không flush
 5. Không nên dùng SIGKILL như lựa chọn đầu tiên.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Vì sao `systemctl stop` gửi SIGTERM trước, SIGKILL sau timeout?
+2. Signal nào thường dùng để yêu cầu daemon đọc lại config / mở lại log?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Cho app đóng connection, flush data, xóa file tạm; chỉ ép khi app không chịu dừng.
+2. SIGHUP (tùy app).
+
+</details>
 

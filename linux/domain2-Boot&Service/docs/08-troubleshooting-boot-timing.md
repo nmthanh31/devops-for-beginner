@@ -127,3 +127,25 @@ Chọn unit có duration cao trong blame và tìm nó trong critical-chain. Ghi:
 ## Cần nhớ
 
 Đi từ unit đến process, socket rồi application response. active, LISTEN và HTTP healthy là các bằng chứng khác nhau. Timing tools giúp định hướng, không tự xác định root cause.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Service failed thì restart trước rồi tính." | Restart có thể xóa evidence (state, log context); thu status/journal/properties trước. |
+| "`systemd-analyze blame` cho biết service nào làm chậm boot." | Chỉ là thời gian khởi tạo từng unit (chạy song song); dùng `critical-chain` để thấy chuỗi thực sự chặn. |
+
+## Tự kiểm tra
+
+1. Thứ tự thu evidence khi service failed?
+2. Lệnh thấy chuỗi unit làm chậm tới `multi-user.target`?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `systemctl status` → `systemctl show -p ...` → `journalctl -u -b` → `systemctl cat` → dependency → process/socket/HTTP.
+2. `systemd-analyze critical-chain`.
+
+</details>
+

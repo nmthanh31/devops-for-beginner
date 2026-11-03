@@ -8,6 +8,23 @@ Các lệnh `pvcreate`, `mkfs`, `fdisk`, `parted` và một số lệnh LVM thay
 
 Các placeholder như `<LAB_DISK>` và `<FILESYSTEM_UUID>` không phải cú pháp chạy nguyên văn. Hãy thay bằng giá trị thật sau khi kiểm tra; đừng đoán rằng disk của bạn nhất định là `/dev/sdb`.
 
+### Không có disk trống? Dùng loop device
+
+Một file thường có thể đóng vai disk lab — an toàn vì không đụng disk thật:
+
+```bash
+sudo truncate -s 3G /var/tmp/l05-disk.img          # file 3 GiB (sparse)
+LOOP=$(sudo losetup --find --show /var/tmp/l05-disk.img)
+echo "$LOOP"                                        # ví dụ /dev/loop7 → dùng làm <LAB_DISK>
+lsblk "$LOOP"
+```
+
+Phần A: `sudo mkfs.ext4 "$LOOP"` để có filesystem lab. Phần B: dùng `"$LOOP"` thay `/dev/<LAB_DISK>`.
+
+> Loop device **không tự gắn lại sau reboot**, nên entry `fstab` dùng UUID của loop sẽ không mount được lúc boot — thêm option `nofail` cho entry lab, hoặc chỉ kiểm bằng `umount` + `mount` (bước A5) thay vì reboot.
+
+Cleanup loop (sau khi gỡ fstab entry, `umount`, và `vgremove`/`pvremove` nếu đã làm Phần B): `sudo losetup -d "$LOOP" && sudo rm /var/tmp/l05-disk.img`.
+
 ---
 
 ## Phần A — Mount một filesystem bền vững
@@ -199,6 +216,15 @@ df -h /srv/lvm-lab
 Không chạy lệnh này nếu VG không còn đủ dung lượng hoặc filesystem/thiết bị thực tế khác ví dụ. Cách mở rộng phụ thuộc filesystem và tình trạng storage.
 
 ---
+
+## Definition of Done
+
+- [ ] Ghi UUID, FSTYPE, mount point trước khi sửa `fstab`; có bản backup `fstab` có timestamp.
+- [ ] `findmnt --verify` sạch; `umount` + `mount` theo `fstab` thành công.
+- [ ] Phần B: `pvs`/`vgs`/`lvs` + `lsblk -f` thể hiện đủ chuỗi disk → PV → VG → LV → FS → mount.
+- [ ] (Nếu làm) `lvextend -r` và `df` tăng tương ứng.
+- [ ] Fault tự tạo: sai UUID trong `fstab` → `findmnt --verify` bắt được → sửa.
+- [ ] Rollback/cleanup sạch: không còn entry lab trong `fstab`, không còn VG/loop lab.
 
 ## Kết quả cần giải thích bằng lời
 

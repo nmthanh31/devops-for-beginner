@@ -1,5 +1,13 @@
 # Bài 8 — File Descriptor
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Giải thích FD là số đại diện cho tài nguyên đang mở (file, pipe, socket, terminal).
+> - Dùng FD để trả lời: ai giữ file? ai giữ port? vì sao xóa file mà disk chưa free?
+>
+> **Hình dung:** FD là **số phiếu gửi đồ** ở quầy — process cầm phiếu số 3 để lấy đúng món (file/socket) kernel đang giữ hộ.
+
+
 ### FD là gì?
 
 File Descriptor, viết tắt FD, là số nguyên đại diện cho resource mà process đang mở.
@@ -78,4 +86,18 @@ FD giúp trả lời:
 4. FD là cầu nối giữa process và tài nguyên bên ngoài.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Xem process 1234 đang mở những gì?
+2. Vì sao `umount` báo busy?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `ls -l /proc/1234/fd` hoặc `lsof -p 1234`.
+2. Một process còn giữ FD (hoặc CWD) trên filesystem đó — tìm bằng `lsof +f -- MOUNT`/`fuser -vm`.
+
+</details>
 

@@ -1,5 +1,13 @@
 # Bài 5 — `/proc`, `/sys` và `/dev`
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Phân biệt `/proc` (process + kernel), `/sys` (device/kernel objects), `/dev` (device nodes).
+> - Biết vì sao chúng trông như file mà không phải dữ liệu trên disk, và vì sao lab **chỉ đọc**.
+>
+> **Hình dung:** đây là các "bảng điều khiển" kernel dán lên cây thư mục — đọc để xem đồng hồ đo, ghi là vặn núm.
+
+
 > **Nền tảng + mở rộng:** các đường dẫn này thuộc cây thư mục quen thuộc của Linux và hữu ích khi tìm evidence. Cách dùng sâu các pseudo-filesystem/kernel interface vượt ngoài trọng tâm LPIC 104.6/104.7.
 
 ## Vì sao chúng trông như file nhưng không giống file thường?
@@ -28,6 +36,30 @@ Device node là điểm truy cập do kernel/device manager quản lý. `stat` h
 stat /dev/null
 stat /dev/zero
 ~~~
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "File trong `/proc` chiếm dung lượng disk." | Kernel tạo nội dung động khi đọc; size thường hiện 0. |
+| "Ghi thử vào `/proc/sys` không sao." | Đổi cấu hình kernel runtime ngay lập tức. |
+| "`/dev/null` là file rỗng." | Là character device bỏ mọi dữ liệu ghi vào. |
+
+## Tự kiểm tra
+
+1. Xem dòng lệnh khởi động của PID 1 ở đâu?
+2. Tìm danh sách interface mạng qua `/sys` ở đâu?
+3. `stat /dev/sda` cho biết loại file gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `/proc/1/cmdline` (dùng `tr '\0' ' ' < /proc/1/cmdline`).
+2. `/sys/class/net/`.
+3. Block special file, có major/minor number.
+
+</details>
 
 ## Nguồn
 

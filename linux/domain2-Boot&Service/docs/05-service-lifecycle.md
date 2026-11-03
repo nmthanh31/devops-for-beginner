@@ -121,3 +121,25 @@ Chỉ thao tác trên unit user của lab. Không enable/disable service hệ th
 ## Cần nhớ
 
 start/stop/restart quản lý trạng thái chạy; enable/disable quản lý quan hệ kích hoạt; reload nói với application; daemon-reload nói với manager.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`enable` là start luôn." | Chỉ tạo quan hệ kích hoạt lúc boot; dùng `enable --now` để start ngay. |
+| "`reload` và `daemon-reload` như nhau." | `reload` nói với app (đọc lại config); `daemon-reload` nói với systemd (đọc lại unit file). |
+
+## Tự kiểm tra
+
+1. `Restart=on-failure` có restart khi bạn `systemctl stop` không?
+2. Service crash liên tục rồi dừng hẳn với `start-limit-hit`. Vì sao?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Không — stop là có chủ đích.
+2. Vượt `StartLimitBurst` trong `StartLimitIntervalSec`; xem log, sửa nguyên nhân, `systemctl reset-failed`.
+
+</details>
+

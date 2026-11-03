@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: kubernetes-alert-gateway
+Version: 0.1.0
+Summary: Python implementation of Kubernetes Alert Gateway
+Requires-Python: >=3.12
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: httpx
+Requires-Dist: pydantic-settings
+Requires-Dist: python-dotenv
+Requires-Dist: redis
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: httpx2; extra == "dev"

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-webhook-config
+  namespace: cattle-monitoring-system
+data:
+  NODE_ENV: "production"
+  PORT: "8080"
+  ALERTMANAGER_WEBHOOK_PATH: "/api/v1/webhooks/alertmanager"
+  TELEGRAM_PARSE_MODE: "HTML"
+  TELEGRAM_DISABLE_WEB_PAGE_PREVIEW: "true"
+  TELEGRAM_NOTIFICATION_MODE: "per-alert"
+  NOTIFICATION_ENABLED: "true"
+  DISPLAY_TIMEZONE: "Asia/Ho_Chi_Minh"
+  LOG_LEVEL: "info"
+  DEDUP_ENABLED: "true"
+  DEDUP_TTL_SECONDS: "300"
+  REDIS_HOST: "valkey-cluster-bootstrap.valkey-cluster.svc.cluster.local"
+  REDIS_PORT: "6379"
+  REDIS_CLUSTER_MODE: "true"
+  REDIS_DB: "0"
+  REDIS_KEY_PREFIX: "alertmanager:dedup:uat:"
+  TELEGRAM_REQUEST_TIMEOUT_MS: "10000"
+  TELEGRAM_MAX_RETRIES: "3"
+  TELEGRAM_RETRY_DELAY_MS: "1000"
+  MAX_CONCURRENT_NOTIFICATIONS: "5"
+  RANCHER_API_URL: "https://uat-rancher-lab.vnpost.vn"
+  OWNERSHIP_CACHE_TTL_SECONDS: "300"
+  K8S_TOKEN_FILE: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+  K8S_CA_FILE: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+  FALCO_IGNORED_NAMESPACES: ""

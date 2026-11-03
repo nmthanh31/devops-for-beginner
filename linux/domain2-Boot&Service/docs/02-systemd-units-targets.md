@@ -90,3 +90,25 @@ Nếu ssh.service không có, chọn một unit từ danh sách. Tìm các secti
 ## Cần nhớ
 
 Unit là đối tượng systemd quản lý; service là một loại unit; target gom và đồng bộ unit. Dependency graph khác với process tree.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Target là một service." | Target là nhóm/điểm đồng bộ các unit, không tự chạy process. |
+| "Sửa unit file là systemd thấy ngay." | Cần `systemctl daemon-reload`. |
+
+## Tự kiểm tra
+
+1. Xem default target?
+2. Unit file nằm ở `/etc/systemd/system` và `/usr/lib/systemd/system` — cái nào thắng?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `systemctl get-default`.
+2. `/etc/systemd/system` (cấu hình admin) ưu tiên hơn file do package cung cấp.
+
+</details>
+

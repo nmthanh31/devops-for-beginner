@@ -1,5 +1,9 @@
 # Bài 6 — Debug và ShellCheck
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:** debug script bằng `bash -x`/`set -x`, đọc cảnh báo ShellCheck, và test script với input xấu một cách an toàn.
+
+
 ## Debug bằng Bash
 
 Khi script sai, cần biết shell đã thực sự chạy command nào và biến có giá trị gì. Bash tracing có thể giúp nhìn execution flow, nhưng phải cẩn thận vì trace có thể làm lộ secret.

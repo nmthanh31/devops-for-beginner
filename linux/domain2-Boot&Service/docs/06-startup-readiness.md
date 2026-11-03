@@ -83,3 +83,25 @@ Nếu không có endpoint health, thử / và ghi rõ đây chỉ chứng minh H
 ## Cần nhớ
 
 Type quyết định mốc systemd đánh giá startup; readiness ứng dụng cần kiểm tra riêng bằng socket, HTTP và dependency phù hợp.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`active (running)` = phục vụ được." | Còn phải có listener và HTTP/health trả đúng. |
+| "`Type=simple` biết khi nào app sẵn sàng." | `simple` coi là started ngay khi fork; `notify` mới chờ app báo ready. |
+
+## Tự kiểm tra
+
+1. Ba phép kiểm để chứng minh service web sẵn sàng?
+2. Liveness khác readiness?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `systemctl is-active`, `ss -lntp` có port, `curl -i` endpoint health trả 2xx.
+2. Liveness: process còn sống/hoạt động cơ bản; readiness: sẵn sàng nhận traffic (dependency OK).
+
+</details>
+

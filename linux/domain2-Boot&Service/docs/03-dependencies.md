@@ -95,3 +95,25 @@ Tự trả lời:
 ## Cần nhớ
 
 Requirement quyết định unit nào được kéo vào; ordering quyết định thứ tự giữa các job. Chúng không thay thế retry hoặc health check của application.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`After=` kéo theo unit kia được start." | `After=` chỉ là thứ tự; `Wants=`/`Requires=` mới kéo theo. |
+| "`After=network.target` nghĩa là mạng đã dùng được." | Chỉ là network stack được cấu hình ở mức tối thiểu; cần `network-online.target` (và vẫn không chứng minh dịch vụ xa sẵn sàng). |
+
+## Tự kiểm tra
+
+1. Service A cần DB start trước và nếu DB không start thì A cũng không nên chạy. Viết gì?
+2. Chỉ có `Wants=x.service`, không có `After=`. Thứ tự start?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `Requires=db.service` + `After=db.service`.
+2. Có thể song song — không đảm bảo x xong trước.
+
+</details>
+

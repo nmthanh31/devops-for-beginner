@@ -1,5 +1,13 @@
 # Bài 12 — Exit Code
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Đọc exit code (0 = thành công, khác 0 = lỗi) và quy ước `128 + N` khi chết vì signal N.
+> - Dùng exit code trong script và khi đọc `systemctl status`.
+>
+> **Hình dung:** exit code là **tờ biên bản cuối ca** process để lại cho parent.
+
+
 ### Exit code là gì?
 
 Khi process kết thúc, nó trả về exit code hoặc exit status.
@@ -59,4 +67,18 @@ Exit code được dùng bởi:
 5. Process bị signal terminate có thể có exit status đặc biệt.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Exit code 137 nghĩa gì?
+2. Exit code 143?
+
+<details>
+<summary>Đáp án</summary>
+
+1. 128 + 9 → bị SIGKILL (thường OOM kill hoặc `kill -9`).
+2. 128 + 15 → bị SIGTERM.
+
+</details>
 

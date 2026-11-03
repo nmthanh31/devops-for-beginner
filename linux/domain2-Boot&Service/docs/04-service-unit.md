@@ -161,3 +161,25 @@ Chỉ xóa unit lab vừa tạo.
 ## Cần nhớ
 
 [Unit] mô tả metadata và quan hệ; [Service] mô tả cách chạy process; [Install] mô tả quan hệ được thiết lập khi enable.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`ExecStart=` chạy qua shell nên dùng được `|` và `>`." | Không qua shell; cần `/bin/sh -c '...'` nếu thật sự cần. |
+| "Sửa file unit gốc của package." | Dùng drop-in `systemctl edit` để không bị ghi đè khi upgrade. |
+
+## Tự kiểm tra
+
+1. Service chạy dưới user nào nếu không có `User=`?
+2. CWD mặc định của system service?
+
+<details>
+<summary>Đáp án</summary>
+
+1. root (system service) — nên đặt `User=` theo least privilege.
+2. `/` — đặt `WorkingDirectory=` nếu app dùng relative path.
+
+</details>
+

@@ -587,6 +587,30 @@ QCOW2 có virtual size khác disk size thực tế. qemu-img convert tạo file 
 6. dmesg là kernel ring buffer; journalctl truy vấn journal, lịch sử tùy cấu hình.
 7. Boot nhanh hơn chưa chắc tốt hơn; phải xác minh chức năng và khả năng khôi phục.
 
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Kernel tự tìm được root filesystem mọi lúc." | Thường cần initramfs nạp driver (LVM, RAID, mã hóa) trước khi mount root thật. |
+| "GRUB là một phần của kernel." | GRUB là bootloader, nạp kernel + initramfs rồi trao quyền. |
+| "Sửa `/etc/default/grub` là có hiệu lực." | Phải chạy `update-grub`/`grub-mkconfig` để sinh `grub.cfg`. |
+
+## Tự kiểm tra
+
+1. Thứ tự 6 giai đoạn từ bấm nút nguồn tới service chạy?
+2. Xem kernel đã boot với tham số nào?
+3. Kiểm máy boot UEFI hay BIOS?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Firmware (BIOS/UEFI) → bootloader (GRUB) → kernel → initramfs → mount root thật → systemd (PID 1) → target → service.
+2. `cat /proc/cmdline`.
+3. `ls /sys/firmware/efi` tồn tại → UEFI.
+
+</details>
+
 ## Nguồn học tập
 
 - [LPIC-1 Objectives V5.0 — Objective 101.2: Boot the system](https://wiki.lpi.org/wiki/LPIC-1_Objectives_V5.0)

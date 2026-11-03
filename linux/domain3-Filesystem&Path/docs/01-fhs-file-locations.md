@@ -1,5 +1,13 @@
 # Bài 1 — FHS: tìm đúng config, data, log và command
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Đoán đúng **vùng** chứa config, data, log, runtime state, command theo FHS — rồi xác nhận trên máy thật.
+> - Chọn đúng công cụ: `type`/`command -v` cho command, `find` cho file hiện có, `locate` cho tra nhanh.
+>
+> **Hình dung:** FHS giống sơ đồ tầng của một tòa nhà văn phòng — phòng hành chính (`/etc`), kho hồ sơ (`/var/lib`), sổ nhật ký (`/var/log`), bàn làm việc tạm (`/run`, `/tmp`). Mỗi công ty (distro) có thể bố trí hơi khác, nhưng sơ đồ cho bạn biết bắt đầu tìm ở đâu.
+
+
 > **LPIC-1 104.7:** làm quen FHS, nơi đặt file/thư mục thông dụng, và cách tìm file/lệnh. Nội dung bên dưới được giải thích lại để học, không chép nguyên văn giáo trình.
 
 ## FHS trả lời câu hỏi gì?
@@ -51,6 +59,31 @@ locate sshd_config
 ~~~
 
 `locate` không tìm được file mới không chứng minh file không tồn tại; dùng `find` để xác nhận.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`which` cho biết shell sẽ chạy gì." | Không thấy alias/function/builtin — dùng `type -a`. |
+| "`locate` không thấy = file không tồn tại." | Database có thể cũ; xác nhận bằng `find`. |
+| "Mọi log đều ở `/var/log/*.log`." | Nhiều distro dùng journal (L07). |
+| "`/run` và `/var/lib` đều là data." | `/run` mất sau reboot; `/var/lib` là state bền. |
+
+## Tự kiểm tra
+
+1. Ứng dụng lưu database SQLite của nó ở đâu theo FHS? PID file ở đâu?
+2. `ll` chạy được nhưng `which ll` không in gì. Vì sao?
+3. Phần mềm bên thứ ba tự đóng gói (không qua package manager) thường đặt ở đâu?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Database: `/var/lib/<app>/`. PID file: `/run/<app>.pid` (runtime state).
+2. `ll` là alias của shell; `which` chỉ tìm executable trong `PATH`. `type -a ll` sẽ thấy.
+3. `/opt/<app>`.
+
+</details>
 
 ## Nguồn
 

@@ -65,3 +65,16 @@ journal và timing cho biết điều gì?
 5. daemon-reload khác reload thế nào?
 6. active (running) có chứng minh HTTP healthy không?
 7. Khi service failed, cần thu evidence nào trước khi restart?
+
+<details>
+<summary>Gợi ý đáp án (mở sau khi tự trả lời)</summary>
+
+1. Firmware khởi tạo phần cứng và tìm bootloader; bootloader (GRUB) nạp kernel + initramfs; kernel khởi tạo hệ thống; initramfs chuẩn bị driver để mount root thật; systemd (PID 1) đưa hệ thống tới target mong muốn.
+2. Service quản lý process; target là nhóm/điểm đồng bộ các unit, không tự chạy process.
+3. `After=` chỉ thứ tự; `Wants=` kéo theo nhưng không bắt buộc thành công; `Requires=` kéo theo và phụ thuộc chặt.
+4. Không — `enable` chỉ tạo quan hệ kích hoạt; cần `start` hoặc `enable --now`.
+5. `daemon-reload` bảo systemd đọc lại unit file; `reload` bảo application đọc lại config của nó.
+6. Không — cần listener (`ss`) và HTTP/health check trả đúng.
+7. `systemctl status`, `systemctl show` (ExecMainStatus, Result, NRestarts…), `journalctl -u UNIT -b`, `systemctl cat UNIT`, dependency, rồi process/socket.
+
+</details>

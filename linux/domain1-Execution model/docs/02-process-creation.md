@@ -1,5 +1,13 @@
 # Bài 2 — Process được tạo như thế nào?
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Mô tả chuỗi `fork()` (nhân bản process) → `exec()` (thay chương trình) → `wait()`.
+> - Biết child kế thừa gì từ parent (env, CWD, FD, credentials).
+>
+> **Hình dung:** `fork()` là **photocopy** cả người nấu lẫn căn bếp; `exec()` là bản sao **vứt công thức cũ, cầm công thức mới** — vẫn bếp đó, vẫn đồ nghề đó (FD, env, CWD).
+
+
 ### Mô hình cơ bản
 
 ~~~text
@@ -64,4 +72,18 @@ sleep
 4. exec() không đồng nghĩa với tạo PID mới.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Sau `exec()`, PID có đổi không?
+2. Vì sao redirect `cmd > out.txt` hoạt động?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Không — cùng process, chỉ thay chương trình.
+2. Shell fork, trong child mở `out.txt` làm FD 1, rồi exec `cmd` — `cmd` kế thừa FD 1.
+
+</details>
 

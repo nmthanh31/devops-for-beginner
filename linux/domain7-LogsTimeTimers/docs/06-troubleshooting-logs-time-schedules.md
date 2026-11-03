@@ -1,5 +1,9 @@
 # Bài 6 — Troubleshooting theo timestamp và evidence
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:** điều tra job/log/time theo **timestamp** và chuỗi evidence: clock đúng → lịch đúng → job được kích hoạt → job thành công → output tồn tại.
+
+
 ## Câu hỏi đầu tiên
 
 Khi job hoặc service không chạy, đừng bắt đầu bằng việc restart liên tục. Hãy xác định:

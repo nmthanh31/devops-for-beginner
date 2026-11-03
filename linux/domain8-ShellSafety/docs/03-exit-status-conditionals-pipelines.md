@@ -1,5 +1,12 @@
 # Bài 3 — Exit status, điều kiện và pipeline
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Dùng exit status (0 = thành công) để rẽ nhánh với `if`, `&&`, `||`.
+> - Biết exit status của pipeline mặc định là của **lệnh cuối** và cách dùng `pipefail`.
+> - Tách stdout và stderr.
+
+
 ## Exit status là gì?
 
 Mỗi command trả về một mã kết thúc. Theo quy ước:
@@ -48,6 +55,28 @@ Mặc định exit status của pipeline thường là status của command cu�
 - File descriptor `2`: stderr.
 
 Redirect stdout không tự redirect stderr. Khi debug, cần biết output đang đi đâu.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`cmd1 | cmd2` fail nếu cmd1 fail." | Mặc định chỉ lấy exit của cmd2 — dùng `set -o pipefail`. |
+| "`a && b || c` giống if/else." | Nếu `b` fail thì `c` cũng chạy. |
+| "`> file 2>&1` và `2>&1 > file` như nhau." | Thứ tự redirect quan trọng; cái sau chỉ đưa stdout vào file. |
+
+## Tự kiểm tra
+
+1. `grep foo missing.txt | wc -l; echo $?` in exit code của ai?
+2. Ghi cả stdout và stderr vào `out.log`?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Của `wc` (thường 0) — lỗi của `grep` bị che.
+2. `cmd > out.log 2>&1` (hoặc `&> out.log` trong Bash).
+
+</details>
 
 ## Nguồn
 

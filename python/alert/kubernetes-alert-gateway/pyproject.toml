@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kubernetes-alert-gateway"
+version = "0.1.0"
+description = "Python implementation of Kubernetes Alert Gateway"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "httpx",
+    "pydantic-settings",
+    "python-dotenv",
+    "redis"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "httpx2"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["kubernetes_alert_gateway*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: tests that require external services",
+]

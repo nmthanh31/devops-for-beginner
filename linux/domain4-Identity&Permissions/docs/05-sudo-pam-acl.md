@@ -1,5 +1,14 @@
 # Bài 5 — `sudo`, PAM và ACL
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Đọc `sudo -l` và biết command chạy dưới identity nào.
+> - Mô tả luồng PAM: ứng dụng → policy → module stack (`auth`/`account`/`password`/`session`).
+> - Nhận diện ACL (dấu `+`) và đọc bằng `getfacl`, hiểu vai trò `mask`.
+>
+> **Hình dung:** `sudo` là giấy ủy quyền cho **từng việc cụ thể**, không phải đổi thẻ vĩnh viễn. PAM là dây chuyền kiểm soát ở cổng — mỗi trạm (module) kiểm một thứ. ACL là danh sách khách mời bổ sung ngoài owner/group/other.
+
+
 ## `sudo`: chạy một command với quyền được cấp
 
 `sudo command` yêu cầu policy cho phép user hiện tại chạy command đó dưới một identity khác — mặc định thường là root. `sudo -l` liệt kê quyền mà policy cấp cho user hiện tại.
@@ -43,6 +52,28 @@ Traditional mode bits có owner/group/other. POSIX ACL có thể thêm quyền c
 ACL có `mask` giới hạn quyền hiệu lực của các named user/group và group class. Vì vậy, đừng suy luận toàn bộ access chỉ từ `ls -l`; khi thấy dấu `+`, kiểm tra ACL. Trong roadmap L04 chỉ cần nhận diện và đọc; cấu hình ACL chi tiết để phần lab/extension.
 
 ACL không nằm trong danh sách command cốt lõi LPIC 104.5 nêu ra; đây là phần mở rộng vận hành để xử lý shared access thực tế. ([acl(5)](https://man7.org/linux/man-pages/man5/acl.5.html))
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Sửa `/etc/sudoers` bằng nano là được." | Dùng `visudo` để kiểm cú pháp, tránh tự khóa. |
+| "Login fail = sai password." | PAM `account`/`session` cũng có thể fail. |
+| "ACL cho user X `rwx` là X có `rwx`." | Bị giới hạn bởi `mask`. |
+
+## Tự kiểm tra
+
+1. `getfacl f` thấy `user:bob:rw-` và `mask::r--`. Bob ghi được không?
+2. `sudo -u appuser id` dùng để làm gì trong chẩn đoán permission?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Không — quyền hiệu lực = `rw-` AND `r--` = `r--`.
+2. Mô phỏng identity của service để thử truy cập (`sudo -u appuser cat FILE`) — kiểm đúng credentials thay vì credentials của admin.
+
+</details>
 
 ## Nguồn
 

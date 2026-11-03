@@ -4,5 +4,6 @@
 
 1. [L08-01 — Safe file report script](./01-safe-file-report.md)
 2. [L08-02 — Controlled fault và repair](./02-script-fault-repair.md)
+3. [L08-03 — diagnose.sh với exit code có nghĩa và 8 test](./03-diagnose-sh-with-tests.md)
 
 Tất cả target nằm trong `$HOME/l08-lab`; không dùng `/`, `/var`, `/usr` hoặc resource của service thật làm target xóa/ghi.

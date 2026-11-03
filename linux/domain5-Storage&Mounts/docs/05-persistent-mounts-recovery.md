@@ -1,5 +1,12 @@
 # Bài 5 — Mount bền vững, kiểm tra và phục hồi
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Viết entry `fstab` bằng UUID và kiểm bằng `findmnt --verify` **trước** reboot.
+> - Chẩn đoán mount sai/thiếu và filesystem đầy theo thứ tự lớp.
+> - Biết cách phục hồi khi `fstab` sai làm boot treo.
+
+
 > **LPIC-1:** Objective 104.3 bao gồm cấu hình mount lúc boot, UUID/label và nhận biết systemd mount units. Các quy trình phục hồi dưới đây là hướng vận hành an toàn.
 
 ## Vì sao cần mount bền vững?
@@ -43,6 +50,30 @@ Nếu mount nhầm vào thư mục đang có dữ liệu, dữ liệu nền bị
 5. Nếu cần thay đổi dung lượng, lần theo đúng các lớp block/partition/LVM/filesystem và có kế hoạch restore.
 
 `df` hiển thị triệu chứng ở cấp filesystem; nó chưa tự giải thích thư mục hay process nào gây ra vấn đề.
+
+<!-- learn:tail -->
+## Mẹo an toàn với `fstab`
+
+| Option | Tác dụng | Khi nào dùng |
+|---|---|---|
+| `nofail` | Boot tiếp nếu thiết bị không có | Disk data không bắt buộc cho boot |
+| `x-systemd.device-timeout=10s` | Không chờ thiết bị quá lâu | Kèm `nofail` |
+| `noauto` | Không mount lúc boot | Disk thao tác tay |
+
+Boot treo vì `fstab` sai → vào emergency shell từ console → `mount -o remount,rw /` → sửa dòng sai → `findmnt --verify` → reboot.
+
+## Tự kiểm tra
+
+1. Vì sao `findmnt --verify` + `mount /srv/x` an toàn hơn reboot thử?
+2. Gõ sai UUID trong `fstab`, không có `nofail`. Reboot thì sao?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Phát hiện lỗi khi hệ thống còn chạy và bạn còn phiên SSH; reboot sai có thể treo ở emergency mode.
+2. systemd chờ thiết bị rồi fail → thường rơi vào emergency mode, cần console để sửa.
+
+</details>
 
 ## Nguồn
 

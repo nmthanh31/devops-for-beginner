@@ -1,5 +1,13 @@
 # Bài 3 — PID, PPID và Process Tree
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Đọc PID/PPID và vẽ process tree bằng `ps -ef --forest` / `pstree -p`.
+> - Biết chuyện gì xảy ra khi parent chết trước child.
+>
+> **Hình dung:** PID là **số CCCD** của process, PPID là **số CCCD của cha/mẹ**. Cây gia phả bắt đầu từ PID 1 (systemd).
+
+
 ### PID
 
 PID là Process ID, định danh của process.
@@ -45,4 +53,18 @@ Nếu parent chết trước child, child có thể được re-parent cho PID 1
 5. Parent chết không nhất thiết làm child chết ngay.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Process mồ côi (parent chết) được ai nhận nuôi?
+2. Service do systemd chạy thường có PPID là gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. PID 1 (hoặc một subreaper như `systemd --user`).
+2. 1 (systemd) — không phải shell của bạn.
+
+</details>
 

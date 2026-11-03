@@ -1,5 +1,13 @@
 # Bài 4 — LVM: PV, VG và LV
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Giải thích PV → VG → LV và vì sao LVM linh hoạt hơn partition cố định.
+> - Biết mở rộng dung lượng là **chuỗi nhiều lớp** (LV rồi filesystem).
+>
+> **Hình dung:** PV là từng thùng nước, VG là bể chung đổ tất cả thùng vào, LV là các vòi lấy nước ra từ bể với dung tích tùy chỉnh. Filesystem là cái bình hứng ở mỗi vòi — nới vòi rộng ra vẫn phải nới bình.
+
+
 > **LPIC-1:** LVM được nhắc ở mức tính năng cơ bản trong Objective 102.1 (thiết kế disk layout). Roadmap lab có thể đi sâu hơn phần LPIC yêu cầu.
 
 ## Vì sao có LVM?
@@ -31,6 +39,28 @@ Không phải mọi thao tác đều cần đủ tất cả các lớp; trước
 ## LVM không phải backup
 
 LVM giúp quản lý cấp phát dung lượng. Nó không tự bảo vệ khỏi xóa nhầm, hỏng filesystem, mất disk hoặc lỗi thao tác. Snapshot có thể hỗ trợ một số workflow nhất định nhưng không thay thế bản backup có thể restore.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "`lvextend` xong là `df` tăng." | Phải resize filesystem (`-r` hoặc `resize2fs`/`xfs_growfs`). |
+| "LVM snapshot là backup." | Cùng PV/VG; mất disk là mất cả hai (xem [L12](../../domain12-BackupRecovery/docs/01-backup-design.md)). |
+| "`-L 1G` là tăng thêm 1G." | `-L 1G` đặt tổng; `-L +1G` mới là tăng thêm. |
+
+## Tự kiểm tra
+
+1. `vgs` báo `VFree 0`. Muốn mở rộng LV phải làm gì trước?
+2. Sau `lvextend -L +5G` (không `-r`), `df -h` không đổi. Vì sao?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Thêm PV vào VG (`pvcreate` disk mới → `vgextend`).
+2. Mới mở rộng LV; filesystem chưa được resize.
+
+</details>
 
 ## Nguồn
 

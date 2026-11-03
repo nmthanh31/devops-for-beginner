@@ -13,6 +13,8 @@ Mục tiêu cuối cùng không phải là học thuộc thật nhiều lệnh. 
 
 Roadmap đầy đủ: [roadmap-devops-platform-mo-rong-gio-cong-ty-w3-w25.html](../roadmap-devops-platform-mo-rong-gio-cong-ty-w3-w25.html)
 
+Tài liệu theo domain: [Linux L01–L12](./linux/README.md) · [Network N01–N12](./network/README.md).
+
 ## Bắt đầu từ đâu?
 
 Mỗi lần học, làm theo thứ tự sau:
@@ -108,7 +110,7 @@ Lần chạy đầu: hệ thống được cấu hình đúng
 Lần chạy thứ hai: changed=0 nếu không có yêu cầu thay đổi
 ```
 
-Điểm bắt đầu: [ANSIBLE-HANDBOOK-JUNIOR-DEVOPS.md](ansible/ansible-jun/ANSIBLE-HANDBOOK-JUNIOR-DEVOPS.md)
+Điểm bắt đầu: [ANSIBLE-HANDBOOK-JUNIOR-DEVOPS.md](ansible/ansible-jun/jun/ANSIBLE-HANDBOOK-JUNIOR-DEVOPS.md)
 
 ### `terraform/`
 

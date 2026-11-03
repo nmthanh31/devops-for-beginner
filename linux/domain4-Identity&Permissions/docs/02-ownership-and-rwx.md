@@ -1,5 +1,14 @@
 # Bài 2 — Ownership và quyền `rwx`
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Đọc `-rw-r-----` thành owner/group/other và đổi qua lại dạng số (`640`).
+> - Hiểu nghĩa **khác nhau** của `r`, `w`, `x` trên file và trên directory.
+> - Biết kernel chỉ chọn **một** class (owner → group → other) để xét.
+>
+> **Hình dung:** directory là căn phòng: `r` = nhìn qua cửa kính thấy danh sách đồ, `x` = được bước vào/đi xuyên qua, `w` = được thêm/bỏ đồ (cần cả `x`).
+
+
 > **LPIC-1 104.5:** quản lý quyền truy cập file/thư mục và ownership; dùng group để chia sẻ quyền.
 
 ## Mỗi filesystem object có owner, group và mode
@@ -68,6 +77,39 @@ Với mode bits truyền thống, kiểm tra theo thứ tự:
 Không cộng dồn owner + group + other bits. Nếu process là owner nhưng owner bits không cho đọc, nó không “mượn” thêm quyền `other` để đọc.
 
 ACL, capabilities và policy bảo mật khác có thể làm bức tranh đầy đủ phức tạp hơn; kiểm tra ACL khi output `ls -l` có dấu `+`.
+
+<!-- learn:tail -->
+## Bảng tra nhanh
+
+| Số | Ký hiệu | | Số | Ký hiệu |
+|---|---|---|---|---|
+| 7 | `rwx` | | 3 | `-wx` |
+| 6 | `rw-` | | 2 | `-w-` |
+| 5 | `r-x` | | 1 | `--x` |
+| 4 | `r--` | | 0 | `---` |
+
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Xóa file cần quyền `w` trên file." | Cần `w`+`x` trên **directory** chứa nó. |
+| "Owner không có `r` nhưng group có `r` thì owner vẫn đọc được." | Kernel chọn class owner rồi dừng → bị từ chối. |
+| "Directory `r` là đủ để đọc file bên trong." | Cần `x` để traverse. |
+
+## Tự kiểm tra
+
+1. `chmod 750 dir`: group làm được gì trong `dir`?
+2. File mode `064`, bạn là owner **và** thuộc group của file. Bạn đọc được không?
+3. Directory `drwx-wx-wx` (733): người khác làm được gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Liệt kê (`r`) và traverse (`x`), không tạo/xóa (thiếu `w`).
+2. **Không.** Kernel thấy bạn là owner → chọn class owner (`0` = `---`) và dừng, không xét tiếp group `6`.
+3. Tạo/xóa/đổi tên entry nếu biết tên và đi qua được, nhưng không liệt kê — kiểu "hộp thư thả vào" (thường kèm sticky bit).
+
+</details>
 
 ## Nguồn
 

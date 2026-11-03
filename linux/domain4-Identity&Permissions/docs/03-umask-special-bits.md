@@ -1,5 +1,13 @@
 # Bài 3 — `umask` và special permission bits
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Tính mode mặc định từ `umask` (file từ 666, directory từ 777).
+> - Nhận diện SUID, SGID, sticky trong `ls -l` và giải thích mỗi bit dùng để làm gì.
+>
+> **Hình dung:** `umask` là "bộ lọc" che bớt quyền khi tạo đồ mới. SUID là "mượn thẻ của chủ chương trình khi chạy" (như `passwd`), SGID trên thư mục là "đồ mới vào phòng tự mang nhãn nhóm của phòng", sticky là "trong phòng chung, chỉ chủ đồ mới được dọn đồ của mình" (`/tmp`).
+
+
 > **LPIC-1 104.5:** biết thay đổi file creation mask và nhận diện SUID, SGID, sticky bit.
 
 ## `umask`: giới hạn quyền mặc định khi tạo object
@@ -54,6 +62,39 @@ Dạng `ls -l` có `t` ở vị trí execute của others; dạng số bắt đ�
 ~~~
 
 Các bit này không thay thế việc hiểu owner/group/mode thường. Trước khi sửa, dùng `stat` để ghi baseline; trong production, xác định lý do bit đang tồn tại.
+
+<!-- learn:tail -->
+## Bảng tính umask
+
+| umask | File mới (từ 666) | Directory mới (từ 777) |
+|---|---|---|
+| `022` | `644` `rw-r--r--` | `755` `rwxr-xr-x` |
+| `027` | `640` `rw-r-----` | `750` `rwxr-x---` |
+| `077` | `600` `rw-------` | `700` `rwx------` |
+| `002` | `664` `rw-rw-r--` | `775` `rwxrwxr-x` |
+
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "umask là phép trừ số học." | Là che bit (AND NOT); với giá trị thường gặp trông giống phép trừ. |
+| "umask cho phép tạo file có `x`." | File thường bắt đầu từ 666 nên không tự có `x`. |
+| "Chữ `S` hoa giống `s` thường." | `S` = bit đặt nhưng **không** có `x` bên dưới — thường là cấu hình sai. |
+
+## Tự kiểm tra
+
+1. umask `027`, tạo thư mục mới. Mode?
+2. `ls -ld /tmp` → `drwxrwxrwt`. Chữ `t` nghĩa gì?
+3. Thư mục dự án chung `drwxrws---`. File mới tạo bên trong thuộc group nào?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `750`.
+2. Sticky bit: chỉ owner của file (hoặc owner dir/root) được xóa/đổi tên file đó.
+3. Group của thư mục (SGID trên directory → kế thừa group).
+
+</details>
 
 ## Nguồn
 

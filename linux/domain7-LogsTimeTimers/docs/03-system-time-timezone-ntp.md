@@ -1,5 +1,13 @@
 # Bài 3 — System time, timezone và NTP
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Phân biệt system clock (UTC), timezone (hiển thị), RTC, và trạng thái NTP sync.
+> - Đọc `timedatectl` / `chronyc tracking`.
+>
+> **Liên hệ:** [N06 — clock lệch phá TLS](../../../network/domain06-DHCPDNSTime/docs/02-time-and-resolution-diagnosis.md).
+
+
 ## Ba khái niệm dễ nhầm
 
 - **System clock:** đồng hồ kernel đang dùng.
@@ -34,6 +42,20 @@ NTP không chỉ “set giờ một lần”; daemon có thể điều chỉnh c
 Linux dùng dữ liệu timezone trong `/usr/share/zoneinfo/`; cấu hình hiện tại thường liên quan tới `/etc/localtime` và `/etc/timezone` tùy distribution.
 
 Khi ghi evidence, nên phân biệt timestamp hiển thị theo local timezone với timestamp UTC. Hai dòng có thể chỉ khác cách hiển thị chứ không phải hai thời điểm khác nhau.
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Đổi timezone có làm cert "not yet valid" hết lỗi không?
+2. Hai máy log cùng sự kiện lệch 7 giờ đúng. Nghi gì trước?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Không — timezone chỉ đổi hiển thị.
+2. Hiển thị timezone khác nhau (UTC vs +07), không phải clock lệch. So bằng `--utc`/`date -u`.
+
+</details>
 
 ## Nguồn
 

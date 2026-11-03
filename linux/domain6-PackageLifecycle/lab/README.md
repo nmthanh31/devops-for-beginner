@@ -4,6 +4,7 @@
 
 1. [L06-01 — Package lifecycle với `tree`](./01-package-lifecycle-tree.md)
 2. [L06-02 — Điều tra package và mô phỏng thay đổi](./02-package-inventory-simulation.md)
+3. [L06-03 — Hold, rollback version và remove vs purge](./03-pin-and-rollback.md)
 
 ## Quy tắc an toàn
 

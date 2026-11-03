@@ -1,5 +1,13 @@
 # Bài 10 — Thread và Process State
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Phân biệt process và thread (chia sẻ memory, FD).
+> - Đọc state `R`, `S`, `D`, `T`, `Z` và biết state nào đáng lo.
+>
+> **Hình dung:** process là **một căn bếp**; thread là **nhiều đầu bếp** trong cùng bếp, dùng chung nồi niêu.
+
+
 ### Thread là gì?
 
 Thread là một luồng thực thi bên trong process.
@@ -51,4 +59,18 @@ Process tồn tại không có nghĩa nó đang dùng CPU. Ví dụ sleep thư�
 5. State cho biết process đang chạy, chờ, dừng hay zombie.
 
 ---
+
+<!-- learn:tail -->
+## Tự kiểm tra
+
+1. Nhiều process `D` cùng lúc gợi ý gì?
+2. Có `kill -9` được process `Z` không?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Đang chờ I/O kernel (disk/NFS chậm) — xem [L09](../../domain9-ResourceTroubleshooting/docs/04-disk-io.md).
+2. Không cần/không được — nó đã chết; parent phải `wait()` (hoặc parent chết để PID 1 thu dọn).
+
+</details>
 

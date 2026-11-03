@@ -90,3 +90,25 @@ Nếu user journal không có sẵn, dùng Lab 1 và mô tả đường đi stdo
 ## Cần nhớ
 
 Log service có thể đến từ application hoặc systemd manager. Lọc theo unit, boot và thời gian rồi ghép với runtime state.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Log của service ở `/var/log/<service>.log`." | Mặc định stdout/stderr vào journal; dùng `journalctl -u`. |
+| "`journalctl -u x` là đủ." | Thêm `-b`, `--since` để đúng boot/thời điểm, tránh đọc nhầm log cũ. |
+
+## Tự kiểm tra
+
+1. Lệnh xem 50 dòng log mới nhất của `lab-api` trong boot hiện tại?
+2. Log user service xem bằng gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. `journalctl -u lab-api -b -n 50 --no-pager`.
+2. `journalctl --user -u UNIT`.
+
+</details>
+

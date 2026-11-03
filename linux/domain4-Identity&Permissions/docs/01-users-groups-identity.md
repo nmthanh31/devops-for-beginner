@@ -1,5 +1,14 @@
 # Bài 1 — User, group và process identity
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Giải thích kernel quyết định quyền theo **UID/GID số của process**, không theo username trên terminal.
+> - Đọc account qua `id`, `getent` (NSS) thay vì chỉ grep `/etc/passwd`.
+> - Phân biệt human account và service account.
+>
+> **Hình dung:** username như tên trên thẻ nhân viên, UID là **mã số** trên chip thẻ — cửa từ (kernel) chỉ đọc mã số. Service chạy bằng thẻ của chính nó, không phải thẻ của admin đã bấm `systemctl start`.
+
+
 > **LPIC-1 107.1:** quản lý user/group và hiểu các file cơ sở dữ liệu liên quan. Bài này tập trung vào cách identity của process ảnh hưởng đến quyền truy cập.
 
 ## Linux kiểm tra UID/GID, không chỉ username
@@ -56,6 +65,28 @@ Nếu service chỉ cần đọc một cấu hình và ghi vào một thư mục
 ## LPIC cần nhận biết
 
 107.1 bao gồm thêm thao tác tạo/sửa/xóa user và group, account hạn chế, `passwd`, `chage`, `useradd`, `usermod`, `userdel`, `groupadd` và các file account. Trong buổi này, trước hết hãy đọc identity/evidence; thay đổi account hệ thống sẽ để dành cho lab có kiểm soát.
+
+<!-- learn:tail -->
+## Hiểu lầm thường gặp
+
+| Hiểu lầm | Sự thật |
+|---|---|
+| "Tôi đọc được file thì service cũng đọc được." | Service chạy UID/GID khác. |
+| "Thêm user vào group là có hiệu lực ngay." | Process/session đang chạy giữ credentials cũ; cần login/restart lại. |
+| "`grep /etc/passwd` là đủ." | Account có thể đến từ LDAP/SSSD; dùng `getent`. |
+
+## Tự kiểm tra
+
+1. Đổi username `alice` thành `alice2` nhưng giữ UID 1001. File cũ của alice thuộc ai?
+2. `usermod -aG appteam setup` xong, `id` trong terminal cũ chưa thấy `appteam`. Vì sao?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Vẫn thuộc UID 1001 → hiển thị `alice2`.
+2. Shell hiện tại giữ supplementary groups lúc login; mở session mới (hoặc `newgrp`).
+
+</details>
 
 ## Nguồn
 

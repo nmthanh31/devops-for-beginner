@@ -1,5 +1,11 @@
 # Bài 4 — Input validation và file safety
 
+<!-- learn:head -->
+> **Sau bài này bạn sẽ:**
+> - Kiểm input (rỗng, không tồn tại, nằm ngoài vùng cho phép) **trước** khi ghi/xóa.
+> - Dùng `mktemp`, `find -print0 | xargs -0` / `find -exec ... {} +` an toàn.
+
+
 ## Không tin input mặc định
 
 Input có thể đến từ argument, environment, file, command substitution hoặc output của command khác. Trước khi dùng input trong path hoặc command, cần kiểm tra nó có đúng loại và phạm vi không.
@@ -34,6 +40,32 @@ find ... -print       # xem target
 find ... -print0      # xác nhận target có khoảng trắng
 find ... -delete      # chỉ chạy sau khi kiểm tra phạm vi
 ```
+
+<!-- learn:tail -->
+## Mẫu chặn xóa nguy hiểm
+
+```bash
+target="${1:?usage: clean.sh DIR}"          # rỗng → thoát với thông báo
+real="$(realpath -e -- "$target")" || exit 2
+case "$real" in
+  "$HOME"/l08-lab/*) ;;                       # chỉ cho phép trong vùng lab
+  *) echo "từ chối: $real ngoài vùng lab" >&2; exit 3 ;;
+esac
+rm -r -- "$real"
+```
+
+## Tự kiểm tra
+
+1. Vì sao `rm -rf "$DIR/"*` nguy hiểm khi `DIR` rỗng?
+2. `--` trong `rm -- "$f"` để làm gì?
+
+<details>
+<summary>Đáp án</summary>
+
+1. Thành `rm -rf /*`.
+2. Kết thúc option — file tên bắt đầu bằng `-` (ví dụ `-rf`) không bị hiểu là option.
+
+</details>
 
 ## Nguồn
 
